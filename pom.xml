@@ -1,0 +1,191 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 模型版本。maven2.0必须是这样写，现在是maven2唯一支持的版本 -->
+    <groupId>top.summer1121.elastic_computing</groupId>
+    <!-- 公司或者组织的唯一标志，并且配置时生成的路径也是由此生成， 如com.winner.trade，
+     maven会将该项目打成的jar包放本地路径：/com/winner/trade -->
+    <artifactId>elastic_computing</artifactId>
+    <!-- 本项目的唯一ID，一个groupId下面可能多个项目，就是靠artifactId来区分的 -->
+    <version>1.0.0</version>
+    <!-- 本项目目前所处的版本号 -->
+    <packaging>pom</packaging>
+    <!-- 打包的机制，如pom,jar, maven-plugin, ejb, war, ear, rar, par，默认为jar -->
+    <name>elastic_computing</name>
+    <!--项目的名称, Maven产生的文档用 -->
+    <!--<url>http://maven.apache.org</url>-->
+    <!--项目主页的URL, Maven产生的文档用 -->
+
+    <modules>
+        <module>elastic_computing-common</module>
+        <module>elastic_computing-computing_unit</module>
+        <module>elastic_computing-client</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+        <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+    </properties>
+
+    <!-- dependencyManagement 只是声明依赖，并不实现引入，子模块引入时不需要指定版本号 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-amqp</artifactId>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter</artifactId>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-config</artifactId>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.cloud</groupId>-->
+<!--                <artifactId>spring-cloud-starter-netflix-zuul</artifactId>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-devtools</artifactId>-->
+<!--                <scope>runtime</scope>-->
+<!--                <optional>true</optional>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--                <optional>true</optional>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-test</artifactId>-->
+<!--                <scope>test</scope>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.amqp</groupId>-->
+<!--                <artifactId>spring-rabbit-test</artifactId>-->
+<!--                <scope>test</scope>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-web</artifactId>-->
+<!--            </dependency>-->
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- dependencies 子项目中全部继承父工程中这里声明的依赖 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.68</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>   <!--构建项目需要的信息-->
+        <finalName>${project.artifactId}-${project.version}</finalName>  <!--产生的构件的文件名-->
+
+<!--        <resources>     &lt;!&ndash;这个元素描述了项目相关的所有资源路径列表，例如和项目相关的属性文件，这些资源被包含在最终的打包文件里。&ndash;&gt;-->
+<!--            <resource>     &lt;!&ndash;这个元素描述了项目相关或测试相关的所有资源路径&ndash;&gt;-->
+<!--                <directory>src/main/resources/*</directory> &lt;!&ndash;描述存放资源的目录，该路径相对POM路径&ndash;&gt;-->
+<!--                <filtering>true</filtering>  &lt;!&ndash;是否使用参数值代替参数名。参数值取自properties元素或者文件里配置的属性，文件在filters元素里列出。&ndash;&gt;-->
+<!--            </resource>-->
+<!--            <resource>-->
+<!--                <directory>src/main/java</directory>-->
+<!--                <filtering>false</filtering>-->
+<!--            </resource>-->
+<!--        </resources>-->
+
+
+        <pluginManagement>  <!-- 编译Java代码插件 -->
+            <plugins>       <!--使用的插件列表 。-->
+<!--                <plugin>    &lt;!&ndash;设置编译版本为1.8&ndash;&gt;-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>    &lt;!&ndash;插件在仓库里的group ID&ndash;&gt;-->
+<!--                    <artifactId>maven-compiler-plugin</artifactId> &lt;!&ndash;插件在仓库里的artifact ID&ndash;&gt;-->
+<!--                    <configuration>            &lt;!&ndash;扩展配置项&ndash;&gt;-->
+<!--                        <source>1.8</source>-->
+<!--                        <target>1.8</target>-->
+<!--                        <encoding>UTF-8</encoding>-->
+<!--                        <showWarnings>true</showWarnings>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
+                <!-- jetty应用服务器插件：用来运行web应用 -->
+                <!--                <plugin>-->
+                <!--                    <groupId>org.mortbay.jetty</groupId>-->
+                <!--                    <artifactId>maven-jetty-plugin</artifactId>-->
+                <!--                    <version>6.1.26</version>-->
+                <!--                    <configuration> &lt;!&ndash; 配置说明 &ndash;&gt;-->
+                <!--                        <connectors>-->
+                <!--                            &lt;!&ndash; SelectChannelConnector：配置的连接器，若不设置，则默认监听端口会被设置为8080 &ndash;&gt;-->
+                <!--                            <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">-->
+                <!--                                <port>8000</port>  &lt;!&ndash; 通过连接器port选项，将监听端口设置为8000 &ndash;&gt;-->
+                <!--                                <maxIdleTime>60000</maxIdleTime>-->
+                <!--                            </connector>-->
+                <!--                        </connectors>-->
+                <!--                        &lt;!&ndash; 用于配置web应用上下文；若不设置，默认上下文采用pom.xml中<artifactId>名称 &ndash;&gt;-->
+                <!--                        <contextPath>/bbs</contextPath>-->
+                <!--                        &lt;!&ndash; 在设置间隔内检查web应用是否有变化，若发现有变化则进行热部署；默认0，表示禁用热部署；>0的数字表示启用； &ndash;&gt;-->
+                <!--                        <scanIntervalSeconds>0</scanIntervalSeconds>-->
+                <!--                    </configuration>-->
+                <!--                </plugin>-->
+                <plugin>    <!-- skip test -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                        <testFailureIgnore>true</testFailureIgnore>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

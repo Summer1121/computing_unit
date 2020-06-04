@@ -4,8 +4,6 @@ package top.summer1121.elastic_computing.computing_unit.core;
 import top.summer1121.elastic_computing.common.customException.ApplicationException;
 import top.summer1121.elastic_computing.common.entity.taskBeans.TaskResultBean;
 
-import java.net.MalformedURLException;
-
 /**
  * 描述：单元核心，计算任务处理器
  *
@@ -23,7 +21,7 @@ public interface ITaskHandler {
 	 * @methodName loadResource
 	 * @date 2020/4/27
 	 */
-	void loadResource() throws MalformedURLException, ApplicationException, Exception;
+	void loadResource() throws ApplicationException, Exception;
 
 	/**
 	 * 执行当前task

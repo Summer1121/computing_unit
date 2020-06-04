@@ -1,6 +1,6 @@
 package top.summer1121.elastic_computing.computing_unit.core.impl;
 
-import top.summer1121.elastic_computing.computing_unit.core.IClassHolder;
+import top.summer1121.elastic_computing.common.holder.IClassHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -14,11 +14,7 @@ import java.util.Map;
  */
 @Component("ClassHolder")
 public class ClassHolder implements IClassHolder {
-	Map<String, Class> map;
-
-	public ClassHolder() {
-		map = new HashMap<>();
-	}
+	static Map<String, Class> map = new HashMap<>();
 
 	@Override
 	public Class get(String className) {

@@ -1,4 +1,4 @@
-package top.summer1121.elastic_computing.computing_unit.core;
+package top.summer1121.elastic_computing.common.holder;
 
 /**
  * 描述：Class对象持有者,根据类名返回对应的class对象

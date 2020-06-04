@@ -1,11 +1,14 @@
 package top.summer1121.elastic_computing.common.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import sun.rmi.runtime.Log;
 
 @Component("SpringUtil")
+@Slf4j
 public class SpringUtil implements ApplicationContextAware {
 
 	private static ApplicationContext applicationContext;
@@ -36,6 +39,7 @@ public class SpringUtil implements ApplicationContextAware {
 
 	//通过name获取 Bean.
 	public static Object getBean(String name){
+//		log.info("尝试获取[{}]对象，[{}]",name,applicationContext);
 		return getApplicationContext().getBean(name);
 	}
 

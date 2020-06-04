@@ -30,7 +30,7 @@ public class DataResourceBean extends ResourceBean {
 
 		StringBuilder sb = new StringBuilder(64);
 		BaseConfig baseConfig = (BaseConfig) SpringUtil.getBean("BaseConfig");
-		sb.append(baseConfig.getDataOssBaseUrl());
+		sb.append(baseConfig.getDataStoreUrlPrefix());
 		sb.append(this.sign);
 		sb.append(".json");
 		return sb.toString();

@@ -1,14 +1,13 @@
 package top.summer1121.elastic_computing.computing_unit.core.impl;
 
 import top.summer1121.elastic_computing.common.entity.resourceBeans.ResourceBean;
-import top.summer1121.elastic_computing.computing_unit.core.IClassLoader;
+import top.summer1121.elastic_computing.common.holder.IClassLoader;
 import top.summer1121.elastic_computing.computing_unit.core.MyClassLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.net.MalformedURLException;
 
 /**
  * @author xtysummer1121@foxmail.com

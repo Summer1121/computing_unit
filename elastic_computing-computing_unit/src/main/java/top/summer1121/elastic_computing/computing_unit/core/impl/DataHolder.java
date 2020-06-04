@@ -1,7 +1,7 @@
 package top.summer1121.elastic_computing.computing_unit.core.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import top.summer1121.elastic_computing.computing_unit.core.IDataHolder;
+import top.summer1121.elastic_computing.common.holder.IDataHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Component("DataHolder")
 public class DataHolder implements IDataHolder {
 
-	Map<String, JSONObject> map=new HashMap<>();
+	static Map<String, JSONObject> map=new HashMap<>();
 
 	@Override
 	public JSONObject get(String dataName) {

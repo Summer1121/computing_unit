@@ -1,6 +1,7 @@
-package top.summer1121.elastic_computing.computing_unit.core;
+package top.summer1121.elastic_computing.common.holder;
 
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.stereotype.Component;
 
 /**
  * 描述：data对象持有者,根据文件名返回对应的JsonObject对象

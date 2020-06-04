@@ -1,9 +1,9 @@
-package top.summer1121.elastic_computing.computing_unit.core;
+package top.summer1121.elastic_computing.common.holder;
 
 import top.summer1121.elastic_computing.common.entity.resourceBeans.ResourceBean;
 
 /**
- * 描述：单元核心，用于用于获取类加载器，加载任务的class文件，并返回class对象
+ * 描述：单元核心，用于获取类加载器，加载任务的class文件，并返回class对象
  *
  * @author xtysummer1121@foxmail.com
  * @date 2020/4/27

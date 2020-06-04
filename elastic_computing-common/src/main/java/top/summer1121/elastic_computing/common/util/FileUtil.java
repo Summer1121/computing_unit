@@ -4,6 +4,7 @@ package top.summer1121.elastic_computing.common.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import top.summer1121.elastic_computing.common.config.BaseConfig;
 import top.summer1121.elastic_computing.common.customException.ApplicationException;
 import top.summer1121.elastic_computing.common.customException.ExceptionContent;
 import top.summer1121.elastic_computing.common.entity.resourceBeans.DataResourceBean;
@@ -87,7 +88,7 @@ public class FileUtil {
 					.sorted(new Comparator<File>() {
 						@Override
 						public int compare(File o1, File o2) {
-							return Long.compare(o1.lastModified(), o2.lastModified());
+							return Long.compare(o2.lastModified(), o1.lastModified());
 						}
 					})
 					.collect(Collectors.toList())
@@ -111,7 +112,7 @@ public class FileUtil {
 	 * @author xtysummer1121@foxmail.com
 	 * @date 2020/5/24
 	 */
-	public static void writeFileByBytes(byte[] bytes, String filePath, String fileName, boolean isOverWrite) {
+	public static File writeFileByBytes(byte[] bytes, String filePath, String fileName, boolean isOverWrite) {
 		BufferedOutputStream bos = null;
 		FileOutputStream fos = null;
 		File file = null;
@@ -125,7 +126,7 @@ public class FileUtil {
 			file = new File(filePath + "\\" + fileName);
 			//如果文件已经存在，并且不覆盖，则不做操作
 			if (file.exists() && isOverWrite == false) {
-				return;
+				return file;
 			}
 
 			//输出流
@@ -136,6 +137,7 @@ public class FileUtil {
 
 			//将字节数组写出
 			bos.write(bytes);
+			return file;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -154,6 +156,7 @@ public class FileUtil {
 				}
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -174,7 +177,7 @@ public class FileUtil {
 			//从oss读取文件
 			byte[] data = FileUtil.loadData(dataResourceBean.getFileUrl());
 			//做本地缓存
-			writeFileByBytes(data, file.getPath(), file.getName(), false);
+			writeFileByBytes(data, ((BaseConfig) SpringUtil.getBean("BaseConfig")).getDataCachePath(), file.getName(), false);
 		}
 		if (!file.exists() || file.length() == 0) {
 			log.error("拉取数据文件失败");
@@ -187,10 +190,10 @@ public class FileUtil {
 	/**
 	 * 将数据文件读为json文件
 	 *
-	 * @author xtysummer1121@foxmail.com
-	 * @date 2020/5/29
 	 * @param file
 	 * @return {@link JSONObject}
+	 * @author xtysummer1121@foxmail.com
+	 * @date 2020/5/29
 	 */
 	public static JSONObject readFileToJson(File file) throws ApplicationException {
 		StringBuilder sb = null;
@@ -221,12 +224,12 @@ public class FileUtil {
 	/**
 	 * 定位某个资源文件是否存在
 	 *
+	 * @param urlName
+	 * @return {@link boolean}
 	 * @author xtysummer1121@foxmail.com
 	 * @date 2020/5/29
-	 * @param urlName 
-	 * @return {@link boolean}
 	 */
-	public static boolean  findResource(String urlName){
+	public static boolean findResource(String urlName) {
 
 		try {
 			URL url = new URL(urlName);
@@ -234,7 +237,7 @@ public class FileUtil {
 			URLConnection uc = url.openConnection();
 			// 打开的连接读取的输入流。
 			InputStream in = uc.getInputStream();
-			return  true;
+			return true;
 		} catch (Exception e) {
 			return false;
 		}

@@ -1,47 +1,24 @@
 package top.summer1121.elastic_computing.computing_unit;
 
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import top.summer1121.elastic_computing.common.constant.MqConstant;
-import top.summer1121.elastic_computing.common.entity.resourceBeans.ClassResourceBean;
-import top.summer1121.elastic_computing.common.entity.resourceBeans.ResourceBean;
-import top.summer1121.elastic_computing.common.entity.taskBeans.TaskBean;
-import top.summer1121.elastic_computing.common.entity.taskBeans.TaskResultBean;
-import top.summer1121.elastic_computing.common.util.MqUtil;
-import top.summer1121.elastic_computing.common.util.SpringUtil;
-import top.summer1121.elastic_computing.computing_unit.core.impl.TaskHandler;
-import top.summer1121.elastic_computing.common.util.UuidUtil;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 @SpringBootApplication
-@ComponentScan({"top.summer1121.elastic_computing.*"})
+@ComponentScan(value = {"top.summer1121.elastic_computing.*"})
 public class ComputingUnitApplication {
-
-	@Autowired
-	RabbitTemplate rabbitTemplate;
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(ComputingUnitApplication.class, args);
+
+//		MqListener mqListener = (MqListener) SpringUtil.getBean("MqListener");
+//		Class mqListenerClazz = mqListener.getClass();
+//		RabbitListener listener = (RabbitListener) mqListenerClazz.getAnnotation(RabbitListener.class);
+//		System.out.println(listener.queues());
 //		new ComputingUnitApplication().invoke();
 	}
 
-	@RabbitListener(queues = MqConstant.TASK_QUEUE)
-	void ListenAndInvoke(TaskBean task) throws Exception {
-		TaskHandler taskHandler = new TaskHandler(task);
-		TaskResultBean result = taskHandler.invoke();
-
-		//返回计算结果
-		rabbitTemplate.convertAndSend(MqConstant.RESULT_EXCHANGE, MqUtil.getResultQueueName(task.getTaskId()), result);
-		return ;
-	}
 
 //	void invoke() throws Exception {
 //		ResourceBean resource = new ClassResourceBean();

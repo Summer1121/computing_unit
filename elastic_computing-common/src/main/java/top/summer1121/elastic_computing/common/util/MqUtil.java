@@ -2,6 +2,9 @@ package top.summer1121.elastic_computing.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import top.summer1121.elastic_computing.common.constant.MqConstant;
 
 /**
@@ -11,7 +14,12 @@ import top.summer1121.elastic_computing.common.constant.MqConstant;
  * @date 2020/5/29
  */
 @Slf4j
+@Component
 public class MqUtil {
+
+	@Autowired
+	RabbitTemplate rabbitTemplate;
+
 	/**
 	 * 创建任务交换器和任务主队列
 	 *
@@ -47,7 +55,7 @@ public class MqUtil {
 		AmqpAdmin amqpAdmin = (AmqpAdmin) SpringUtil.getBean("amqpAdmin");
 
 		// 创建Exchange 交换器(不会重复创建)  所有答案都通过这个交换器
-		amqpAdmin.declareExchange(new TopicExchange(MqConstant.RESULT_EXCHANGE));
+		amqpAdmin.declareExchange(new DirectExchange(MqConstant.RESULT_EXCHANGE));
 		log.info("创建Exchange完成");
 		String queueName = MqConstant.RESULT_QUEUE + taskId;
 		// 创建Queue 队列，持久化(不会重复创建)
@@ -55,7 +63,7 @@ public class MqUtil {
 		log.info("创建Queue完成");
 		// 创建绑定规则  根据elastic.result.*的路由键
 		amqpAdmin.declareBinding(new Binding(queueName, Binding.DestinationType.QUEUE,
-				MqConstant.RESULT_EXCHANGE, MqConstant.RESULT_QUEUE + "*", null));
+				MqConstant.RESULT_EXCHANGE, queueName, null));
 		log.info("创建绑定规则完成");
 		return queueName;
 	}
@@ -76,6 +84,8 @@ public class MqUtil {
 	public static String deleteResultExchange(String taskId) {
 		AmqpAdmin amqpAdmin = (AmqpAdmin) SpringUtil.getBean("amqpAdmin");
 		String queueName = MqConstant.RESULT_QUEUE + taskId;
+		amqpAdmin.removeBinding(new Binding(queueName, Binding.DestinationType.QUEUE,
+				MqConstant.RESULT_EXCHANGE, queueName, null));
 		amqpAdmin.deleteQueue(queueName);
 		return queueName;
 	}

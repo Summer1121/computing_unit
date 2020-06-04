@@ -5,7 +5,6 @@ target/
 !**/src/test/**
 .idea/
 *.properties
-/resources/
 *.class
 
 ### STS ###
